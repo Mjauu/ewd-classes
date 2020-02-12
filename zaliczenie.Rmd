@@ -6,9 +6,6 @@ output: html_notebook
 install.packages('class')
 install.packages('asbio')
 
-RAFAL JARMOLINSKI
-s20847
-
 Załaduj dane wine z pakietu asbio lub wczytaj je z pliku wine.csv.
 ```{r}
 # Load library
