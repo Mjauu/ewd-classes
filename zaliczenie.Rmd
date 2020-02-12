@@ -24,15 +24,6 @@ Sporządź histogram zmiennej wine.class.
 ```{r}
 hist(wine.class)
 ```
-Tu poprawic zeby najpierw podzielic.
-Każdą kolumnę macierzy wine.data wycentruj oraz wyskaluj. Skorzystaj z funkcji scale.
-```{r}
-wine.data <- scale(wine.data)
-print("Means")
-colMeans(wine.data)
-print("Std")
-apply(wine.data, 2, sd)
-```
 Zapisz klasy odpowiadające wierszom ze zbioru testowego i treningowego w zmiennych wine.train.class
 oraz wine.test.class.
 
@@ -44,15 +35,36 @@ set.seed(123)
 idx <- sample(nrow(wine.data), 4000)
 wine.train.data <- wine.data[idx, ]
 ```
+
 Pozostałe obserwacje przypisz do zbioru testowego wine.test.data.
 ```{r}
 wine.test.data <- wine.data[-idx, ]
 ```
+
 Dodaj klasy
 ```{r}
 wine.train.class <- wine.class[idx]
 wine.test.class <- wine.class[-idx]
 ```
+
+Każdą kolumnę macierzy wine.train.data wycentruj oraz wyskaluj. Skorzystaj z funkcji scale.
+```{r}
+wine.train.data <- scale(wine.train.data)
+print("Means")
+colMeans(wine.train.data)
+print("Std")
+apply(wine.train.data, 2, sd)
+```
+
+Każdą kolumnę macierzy wine.test.data wycentruj oraz wyskaluj. Skorzystaj z funkcji scale.
+```{r}
+wine.test.data <- scale(wine.test.data)
+print("Means")
+colMeans(wine.test.data)
+print("Std")
+apply(wine.test.data, 2, sd)
+```
+
 Użyj funkcji knn z bibioteki class do zaklasyfikowania wszystkich wierszy z macierzy wine.test.data
 dla wybranej przez siebie wartości K. Następnie wypisz wartość accuracy, czyli proporcję poprawnie
 zaklasyfikowanych obserwacji.
@@ -86,6 +98,7 @@ which.max(acc)
 ```
 
 Implementacja klasyfikatora KNN.
+Opis poszcyegolnych zadan zawarty w komentarz funkcji
 
 ```{r}
 knn.scratch <- function(vectors, wines, wines.labels, k)
@@ -118,7 +131,6 @@ knn.scratch <- function(vectors, wines, wines.labels, k)
 
 ```{r}
 # Zastosuj tą funkcję do zaklasyfikowania wszystkich wierszy z macierzy wine.test.data
-xx <- wine.test.data
 results <- apply(wine.test.data, 1, function(x) knn.scratch(x, wine.train.data, wine.train.class, k=1))
 print("Accuracy")
 # Oblicz wartość accuracy dla tego predyktora
